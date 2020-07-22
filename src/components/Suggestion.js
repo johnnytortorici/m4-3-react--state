@@ -30,6 +30,8 @@ const Suggestion = ({ search, suggestions, handleSelect }) => {
     };
 
     return (
+        // only render if matches are found
+        (handleMatches(search).length > 0) &&
         <SuggestionBox>
             {handleMatches(search).map((match) => {
                 return (
