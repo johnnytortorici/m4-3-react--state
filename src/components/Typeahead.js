@@ -2,6 +2,9 @@ import React from 'react';
 
 import styled from 'styled-components';
 
+import Wrapper from './Wrapper';
+import Suggestion from './Suggestion';
+
 const SearchBox = styled.input`
     padding: 10px;
     margin-right: 7px;
@@ -19,28 +22,33 @@ const Button = styled.button`
     color: #fff;
     width: 75px;
     font-size: 1.01em;
+    cursor: pointer;
 `;
 
 const Typeahead = ({ suggestions, handleSelect }) => {
     const [ search, setSearch ] = React.useState('');
-
+    
     return (
-        <>
-            <SearchBox
-            type='text'
-            id='search'
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-            onKeyDown={(event) => event.key === 'Enter' && handleSelect(search)}
-            />
-            <Button onClick={() => {
-                    setSearch('');
-                    document.getElementById('search').focus();
-                }
-            }>
-                Clear
-            </Button>
-        </>
+        <Wrapper>
+            <div>
+                <SearchBox
+                    type='text'
+                    id='search'
+                    value={search}
+                    onChange={(event) => setSearch(event.target.value)}
+                    onKeyDown={(event) => event.key === 'Enter' && handleSelect(search)}
+                />
+
+                <Button onClick={() => {
+                        setSearch('');
+                        document.getElementById('search').focus();
+                }}>
+                    Clear
+                </Button>
+            </div>
+        
+            <Suggestion search={search} suggestions={suggestions} handleSelect={handleSelect} />
+        </Wrapper>
     );
 };
 
