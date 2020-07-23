@@ -25,7 +25,7 @@ const Button = styled.button`
     cursor: pointer;
 `;
 
-const Typeahead = ({ suggestions, handleSelect }) => {
+const Typeahead = ({ suggestions, categories, handleSelect }) => {
     const [ search, setSearch ] = React.useState('');
     
     return (
@@ -47,7 +47,11 @@ const Typeahead = ({ suggestions, handleSelect }) => {
                 </Button>
             </div>
         
-            <Suggestion search={search} suggestions={suggestions} handleSelect={handleSelect} />
+            <Suggestion 
+                search={search} 
+                suggestions={suggestions} 
+                handleSelect={handleSelect} 
+                categories={categories} />
         </Wrapper>
     );
 };

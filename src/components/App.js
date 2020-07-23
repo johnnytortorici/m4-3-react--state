@@ -10,7 +10,9 @@ const App = (props) => {
     <>
       <GlobalStyles />
       {/* TODO */}
-      <Typeahead suggestions={data.books} 
+      <Typeahead 
+        suggestions={data.books} 
+        categories={data.categories} 
         handleSelect={(suggestions) => window.alert(suggestions)} />
     </>
   );

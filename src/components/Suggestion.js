@@ -2,6 +2,9 @@ import React from 'react';
 
 import styled from 'styled-components';
 
+import Match from './Match';
+import Category from './Category';
+
 const SuggestionBox = styled.ul`
     margin-top: 10px;
     width: 380px;
@@ -17,7 +20,7 @@ const Item = styled.li`
     }
 `;
 
-const Suggestion = ({ search, suggestions, handleSelect }) => {
+const Suggestion = ({ search, suggestions, handleSelect, categories }) => {
     // function that returns array of matches
     const handleMatches = (search) => {
         return (
@@ -38,7 +41,12 @@ const Suggestion = ({ search, suggestions, handleSelect }) => {
                     <Item 
                         key={match.id} 
                         onClick={() => handleSelect(match.title)}>
-                            {match.title}
+                            {
+                                <>
+                                    <Match match={match} search={search} />
+                                    <Category categories={categories} categoryId={match.categoryId} />
+                                </>
+                            }
                     </Item>
                 )
             })}
