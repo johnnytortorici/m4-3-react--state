@@ -13,7 +13,8 @@ const App = (props) => {
       <Typeahead 
         suggestions={data.books} 
         categories={data.categories} 
-        handleSelect={(suggestions) => window.alert(suggestions)} />
+        handleSelect={(match) => 
+          (match) !== undefined ? window.alert(match.title) : window.alert('No results found.')} />
     </>
   );
 };

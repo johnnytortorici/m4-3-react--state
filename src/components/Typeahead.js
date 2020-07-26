@@ -3,7 +3,56 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Wrapper from './Wrapper';
-import Suggestion from './Suggestion';
+import Suggestion, { matches } from './Suggestion';
+
+const Typeahead = ({ suggestions, categories, handleSelect }) => {
+    const [ search, setSearch ] = React.useState('');
+    const [ selectedIndex, setSelectedIndex ] = React.useState(0);
+    
+    return (
+        <Wrapper>
+            <div>
+                <SearchBox
+                    type='text'
+                    id='search'
+                    value={search}
+                    onChange={(event) => setSearch(event.target.value)}
+                    onKeyDown={(event) => {
+                        switch (event.key) {
+                            case 'Enter':
+                                handleSelect(matches[selectedIndex]);
+                                return;
+                            case 'ArrowUp':
+                                setSelectedIndex(selectedIndex - 1);
+                                return;
+                            case 'ArrowDown':
+                                setSelectedIndex(selectedIndex + 1);
+                                return;
+                            default:
+                                return;
+                        }
+                    }}
+                />
+
+                <Button onClick={() => {
+                        setSearch('');
+                        document.getElementById('search').focus();
+                }}>
+                    Clear
+                </Button>
+            </div>
+        
+            <Suggestion 
+                search={search} 
+                suggestions={suggestions} 
+                handleSelect={handleSelect} 
+                selectedIndex={selectedIndex} 
+                setSelectedIndex={setSelectedIndex} 
+                categories={categories} 
+            />
+        </Wrapper>
+    );
+};
 
 const SearchBox = styled.input`
     padding: 10px;
@@ -24,36 +73,5 @@ const Button = styled.button`
     font-size: 1.01em;
     cursor: pointer;
 `;
-
-const Typeahead = ({ suggestions, categories, handleSelect }) => {
-    const [ search, setSearch ] = React.useState('');
-    
-    return (
-        <Wrapper>
-            <div>
-                <SearchBox
-                    type='text'
-                    id='search'
-                    value={search}
-                    onChange={(event) => setSearch(event.target.value)}
-                    onKeyDown={(event) => event.key === 'Enter' && handleSelect(search)}
-                />
-
-                <Button onClick={() => {
-                        setSearch('');
-                        document.getElementById('search').focus();
-                }}>
-                    Clear
-                </Button>
-            </div>
-        
-            <Suggestion 
-                search={search} 
-                suggestions={suggestions} 
-                handleSelect={handleSelect} 
-                categories={categories} />
-        </Wrapper>
-    );
-};
 
 export default Typeahead;
